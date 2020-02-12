@@ -199,9 +199,9 @@ router.post('/join_redis_test', isNotLoggedIn, async (req, res, next) => {
         console.log(response);
     });
 
-    client.set(nickname, 60*60*24, "EX", 60*60*24, function(err, response)){
+    client.set(nickname, 60*60*24, "EX", 60*60*24, function(err, response){
       console.log(response);
-    }
+    });
 
 
     var smtpTransport = nodemailer.createTransport({
@@ -267,10 +267,6 @@ router.get('/confirmEmail_test',function (req, res) {
   });
 
 });
-
-
-
-
 
 
 
