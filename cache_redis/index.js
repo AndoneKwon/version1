@@ -2,7 +2,8 @@ const redis = require('redis');
 var client = redis.createClient({
     port :6379, 
     host:"172.19.196.142",
-    password:"escseoultech123"
+    password:"escseoultech123",
+    db:0
 });
 
 
