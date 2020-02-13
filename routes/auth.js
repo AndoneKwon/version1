@@ -58,8 +58,10 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     if (exUser) {
       res.render('map',{joinError: '이미 가입된 이메일입니다.'});
     }
-    let salt = Math.round((new Data().valueOf() * Math.random())) + "";
+    
+   // let salt = Math.round((new Data().valueOf() * Math.random())) + "";
     //const hash = await bcrypt.hash(password, 12); //여기에 SALT를 써야함
+    salt = "asgdasg";
     let hash = crypto.createHash("sha512").update(password + salt).digest("hex");
     await User.create({
       email,
@@ -68,9 +70,9 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
       salt : salt,
     });
 
-
+/*
     createEmailkey(nickname, email);
-
+*/
     //임시 만료기간을 닉네임을 통해 확인
     client.set(nickname, 60*60*24, "EX", 60*60*24, function(err, response){
     console.log(response);
@@ -104,22 +106,27 @@ router.get('/confirmEmail',function (req, res) {
 
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
+    passport.authenticate('local', (authError, user, info) => {
     if (authError) {
       console.error(authError);
       return next(authError);
     }
+    /*
     if (!user) {
       req.flash('loginError', info.message);
       return res.redirect(400, '/');
     }
+    */
     return req.login(user, (loginError) => {
+      /*
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
+      */
 
       //이메일 인증링크가 만료됬을시에
+      /*
       if(!client.get(nickname)){
         createEmailkey(user.nickname, user.email);
         return res.status(400).json({
@@ -127,6 +134,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
           messgae : '이메일 인증을 해주세요!',
       });
       }
+      */
 
       //로그인에 성공했으면 JWT 토큰 줘버리기
       try{
@@ -162,7 +170,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 
         return res.json({
             code : 200,
-            message : '토큰이 발급되었습니다.' + message,
+            message : '토큰이 발급되었습니다.',
             token,
             refreshToken,
         });

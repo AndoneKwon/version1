@@ -11,12 +11,6 @@ module.exports = (sequelize, DataTypes)=>(
             allowNull : true,
         },
 
-
-        password : {
-            type : DataTypes.STRING(200),
-            allowNull : false,
-        },
-
         salt : {
             type : DataTypes.STRING(64),
             allowNull : false,
